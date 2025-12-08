@@ -1,7 +1,17 @@
+"use client";
+
 import { Github, Linkedin, Send, Heart } from "lucide-react";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <footer className="border-t border-border bg-card">
@@ -27,24 +37,28 @@ export const Footer = () => {
             <nav className="flex flex-col space-y-2">
               <a
                 href="#home"
+                onClick={(e) => scrollToSection(e, "#home")}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Home
               </a>
               <a
                 href="#about"
+                onClick={(e) => scrollToSection(e, "#about")}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 About
               </a>
               <a
                 href="#projects"
+                onClick={(e) => scrollToSection(e, "#projects")}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Projects
               </a>
               <a
                 href="#contact"
+                onClick={(e) => scrollToSection(e, "#contact")}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 Contact
