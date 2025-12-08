@@ -52,48 +52,115 @@ const socialLinks = [
 ];
 
 export const ContactSection = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
+    },
+  };
+
+  const reasonVariants = {
+    hidden: { opacity: 0, x: 30 },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.1,
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+      },
+    }),
+  };
+
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             Get In Touch
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             Let's collaborate on your next project or discuss opportunities
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             className="space-y-6"
           >
-            <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+            >
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
               <div className="space-y-4">
-                {contactInfo.map((item) => {
+                {contactInfo.map((item, index) => {
                   const Icon = item.icon;
                   return (
-                    <a
+                    <motion.a
                       key={item.label}
                       href={item.href}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all group"
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                      whileHover={{
+                        scale: 1.02,
+                        x: 5,
+                        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
+                      }}
+                      whileTap={{ scale: 0.98 }}
                     >
-                      <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                      <motion.div
+                        className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors"
+                        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                        transition={{ duration: 0.5 }}
+                      >
                         <Icon className="w-5 h-5 text-primary" />
-                      </div>
+                      </motion.div>
                       <div>
                         <p className="text-sm text-muted-foreground mb-1">
                           {item.label}
@@ -102,105 +169,146 @@ export const ContactSection = () => {
                           {item.value}
                         </p>
                       </div>
-                    </a>
+                    </motion.a>
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -5 }}
+              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+            >
               <h3 className="text-2xl font-bold mb-6">Connect With Me</h3>
               <div className="flex gap-4">
-                {socialLinks.map((social) => {
+                {socialLinks.map((social, index) => {
                   const Icon = social.icon;
                   return (
-                    <a
+                    <motion.a
                       key={social.label}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all hover:scale-110 ${social.color}`}
+                      className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all ${social.color}`}
                       aria-label={social.label}
+                      initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                      whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 200,
+                      }}
+                      whileHover={{
+                        scale: 1.15,
+                        rotate: 360,
+                        transition: { duration: 0.4 },
+                      }}
+                      whileTap={{ scale: 0.9 }}
                     >
                       <Icon className="w-6 h-6" />
-                    </a>
+                    </motion.a>
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, type: "spring" }}
             viewport={{ once: true }}
+            whileHover={{ y: -5 }}
             className="bg-card rounded-2xl p-8 shadow-lg border border-border"
           >
             <h3 className="text-2xl font-bold mb-6">Why Work With Me?</h3>
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-primary font-bold">1</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Technical Excellence</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Strong foundation in software engineering with hands-on
-                    experience in modern web technologies and best practices.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-primary font-bold">2</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Business Mindset</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Unique blend of technical and business knowledge ensures
-                    solutions align with your goals and deliver real value.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-primary font-bold">3</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">User-Focused Approach</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Every solution is built with the end user in mind, ensuring
-                    practical and impactful results.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                  <span className="text-primary font-bold">4</span>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Continuous Learning</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Always exploring new technologies and methodologies to
-                    deliver the best possible solutions.
-                  </p>
-                </div>
-              </div>
+              {[
+                {
+                  number: "1",
+                  title: "Technical Excellence",
+                  description:
+                    "Strong foundation in software engineering with hands-on experience in modern web technologies and best practices.",
+                },
+                {
+                  number: "2",
+                  title: "Business Mindset",
+                  description:
+                    "Unique blend of technical and business knowledge ensures solutions align with your goals and deliver real value.",
+                },
+                {
+                  number: "3",
+                  title: "User-Focused Approach",
+                  description:
+                    "Every solution is built with the end user in mind, ensuring practical and impactful results.",
+                },
+                {
+                  number: "4",
+                  title: "Continuous Learning",
+                  description:
+                    "Always exploring new technologies and methodologies to deliver the best possible solutions.",
+                },
+              ].map((reason, index) => (
+                <motion.div
+                  key={reason.number}
+                  className="flex items-start gap-4"
+                  custom={index}
+                  variants={reasonVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  whileHover={{ x: 5 }}
+                >
+                  <motion.div
+                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1"
+                    whileHover={{
+                      scale: 1.2,
+                      backgroundColor: "var(--primary)",
+                      transition: { duration: 0.2 },
+                    }}
+                  >
+                    <motion.span
+                      className="text-primary font-bold"
+                      whileHover={{ color: "var(--primary-foreground)" }}
+                    >
+                      {reason.number}
+                    </motion.span>
+                  </motion.div>
+                  <div>
+                    <h4 className="font-semibold mb-2">{reason.title}</h4>
+                    <p className="text-muted-foreground text-sm">
+                      {reason.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
-            <div className="mt-8 p-6 bg-primary/10 rounded-xl">
-              <p className="text-center text-sm text-muted-foreground">
+            <motion.div
+              className="mt-8 p-6 bg-primary/10 rounded-xl"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              whileHover={{
+                scale: 1.02,
+                backgroundColor: "var(--primary)",
+                transition: { duration: 0.3 },
+              }}
+            >
+              <motion.p
+                className="text-center text-sm text-muted-foreground"
+                whileHover={{ color: "var(--primary-foreground)" }}
+              >
                 <span className="font-semibold text-foreground block mb-2">
                   Ready to start a project?
                 </span>
                 Reach out via email or any of the contact methods above. I'm
                 always open to discussing new opportunities!
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
           </motion.div>
         </div>
       </div>
