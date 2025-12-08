@@ -17,31 +17,85 @@ const skills = [
 ];
 
 export const AboutSection = () => {
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 15,
+      },
+    },
+  };
+
+  const skillVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: (i: number) => ({
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delay: i * 0.05,
+        type: "spring",
+        stiffness: 200,
+        damping: 12,
+      },
+    }),
+  };
+
   return (
     <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <motion.h2
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             About Me
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
             Passionate about creating impactful solutions that bridge technology
             and business
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
+        <motion.div
+          className="grid md:grid-cols-2 gap-8 mb-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={cardVariants}
+            whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
             className="bg-card rounded-2xl p-8 shadow-lg border border-border"
           >
             <h3 className="text-2xl font-bold mb-6">My Journey</h3>
@@ -67,76 +121,127 @@ export const AboutSection = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={containerVariants}
             className="space-y-6"
           >
-            <div className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
+            >
+              <motion.div
+                className="flex items-center gap-4 mb-4"
+                whileHover={{ x: 5 }}
+              >
+                <motion.div
+                  className="p-3 bg-primary/10 rounded-lg"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <GraduationCap className="w-6 h-6 text-primary" />
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="font-semibold text-lg">Education</h4>
                   <p className="text-sm text-muted-foreground">Dual Degrees</p>
                 </div>
-              </div>
+              </motion.div>
               <ul className="space-y-2 text-muted-foreground">
-                <li className="flex items-start gap-2">
+                <motion.li
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                >
                   <span className="text-primary mt-1">•</span>
                   <span>Bachelor's in Software Engineering</span>
-                </li>
-                <li className="flex items-start gap-2">
+                </motion.li>
+                <motion.li
+                  className="flex items-start gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
                   <span className="text-primary mt-1">•</span>
                   <span>Bachelor's in Business Administration & Information Systems</span>
-                </li>
+                </motion.li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
+            >
+              <motion.div
+                className="flex items-center gap-4 mb-4"
+                whileHover={{ x: 5 }}
+              >
+                <motion.div
+                  className="p-3 bg-primary/10 rounded-lg"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <MapPin className="w-6 h-6 text-primary" />
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="font-semibold text-lg">Location</h4>
                   <p className="text-sm text-muted-foreground">Based in</p>
                 </div>
-              </div>
+              </motion.div>
               <p className="text-muted-foreground">Ethiopia 🇪🇹</p>
-            </div>
+            </motion.div>
 
-            <div className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-primary/10 rounded-lg">
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
+            >
+              <motion.div
+                className="flex items-center gap-4 mb-4"
+                whileHover={{ x: 5 }}
+              >
+                <motion.div
+                  className="p-3 bg-primary/10 rounded-lg"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.5 }}
+                >
                   <Briefcase className="w-6 h-6 text-primary" />
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="font-semibold text-lg">Focus Areas</h4>
                   <p className="text-sm text-muted-foreground">What I do</p>
                 </div>
-              </div>
+              </motion.div>
               <div className="flex flex-wrap gap-2 text-sm">
-                <span className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full">
+                <motion.span
+                  className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Code2 className="w-4 h-4" />
                   Full-Stack Development
-                </span>
-                <span className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full">
+                </motion.span>
+                <motion.span
+                  className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <TrendingUp className="w-4 h-4" />
                   Business Strategy
-                </span>
+                </motion.span>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
+          whileHover={{ y: -5 }}
           className="bg-card rounded-2xl p-8 shadow-lg border border-border"
         >
           <h3 className="text-2xl font-bold mb-6 text-center">Skills & Technologies</h3>
@@ -144,11 +249,18 @@ export const AboutSection = () => {
             {skills.map((skill, index) => (
               <motion.span
                 key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                custom={index}
+                variants={skillVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true }}
-                className="px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg font-medium transition-all hover:scale-105 cursor-default"
+                whileHover={{
+                  scale: 1.15,
+                  rotate: [0, -5, 5, -5, 0],
+                  transition: { duration: 0.3 },
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg font-medium transition-all cursor-default"
               >
                 {skill}
               </motion.span>
