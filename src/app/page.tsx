@@ -1,19 +1,21 @@
-import Navigation from "@/components/Navigation"
-import HeroSection from "@/components/HeroSection"
-import AboutSection from "@/components/AboutSection"
-import ProjectsSection from "@/components/ProjectsSection"
-import ContactSection from "@/components/ContactSection"
-import Footer from "@/components/Footer"
+import { Navigation } from "@/components/navigation";
+import { HeroSection } from "@/components/hero-section";
+import { AboutSection } from "@/components/about-section";
+import { ProjectsSection } from "@/components/projects-section";
+import { ContactSection } from "@/components/contact-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <>
       <Navigation />
-      <HeroSection />
-      <AboutSection />
-      <ProjectsSection />
-      <ContactSection />
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <ContactSection />
+      </main>
       <Footer />
-    </div>
-  )
+    </>
+  );
 }
