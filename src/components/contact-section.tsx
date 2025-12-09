@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, Send, Github, Linkedin, MessageCircle } from "lucide-react";
+import { Mail, Phone, Send, Github, Linkedin, MessageCircle, MapPin } from "lucide-react";
 
 const contactInfo = [
   {
@@ -27,6 +27,12 @@ const contactInfo = [
     label: "Telegram",
     value: "@Natuh21",
     href: "https://t.me/Natuh21",
+  },
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Ethiopia",
+    href: "https://www.google.com/maps/place/Ethiopia",
   },
 ];
 
