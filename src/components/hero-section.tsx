@@ -85,15 +85,6 @@ export const HeroSection = () => {
           animate="visible"
         >
           <motion.div variants={itemVariants}>
-            <motion.div
-              className="inline-block px-4 py-2 bg-primary/10 rounded-full mb-6"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="text-sm font-medium text-primary">
-                👋 Welcome to my portfolio
-              </span>
-            </motion.div>
             <motion.h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
               animate={floatingAnimation}
