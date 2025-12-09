@@ -52,6 +52,32 @@ const socialLinks = [
 ];
 
 export const ContactSection = () => {
+  const handleLinkClick = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Handle mailto and tel links normally
+    if (href.startsWith("mailto:") || href.startsWith("tel:")) {
+      return; // Let default behavior handle these
+    }
+
+    // For external links (http/https), handle iframe context
+    if (href.startsWith("http")) {
+      e.preventDefault();
+      
+      // Check if we're in an iframe
+      const isInIframe = window.self !== window.top;
+      
+      if (isInIframe) {
+        // Post message to parent to open in new tab
+        window.parent.postMessage(
+          { type: "OPEN_EXTERNAL_URL", data: { url: href } },
+          "*"
+        );
+      } else {
+        // Not in iframe, open normally
+        window.open(href, "_blank", "noopener,noreferrer");
+      }
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -140,9 +166,10 @@ export const ContactSection = () => {
                     <motion.a
                       key={item.label}
                       href={item.href}
+                      onClick={(e) => handleLinkClick(item.href, e)}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all group"
+                      className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all group cursor-pointer"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -161,7 +188,7 @@ export const ContactSection = () => {
                       >
                         <Icon className="w-5 h-5 text-primary" />
                       </motion.div>
-                      <div>
+                      <div className="pointer-events-none">
                         <p className="text-sm text-muted-foreground mb-1">
                           {item.label}
                         </p>
@@ -188,9 +215,10 @@ export const ContactSection = () => {
                     <motion.a
                       key={social.label}
                       href={social.href}
+                      onClick={(e) => handleLinkClick(social.href, e)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all ${social.color}`}
+                      className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all cursor-pointer ${social.color}`}
                       aria-label={social.label}
                       initial={{ opacity: 0, scale: 0, rotate: -180 }}
                       whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
@@ -207,7 +235,7 @@ export const ContactSection = () => {
                       }}
                       whileTap={{ scale: 0.9 }}
                     >
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-6 h-6 pointer-events-none" />
                     </motion.a>
                   );
                 })}
