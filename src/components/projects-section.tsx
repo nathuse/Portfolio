@@ -119,36 +119,6 @@ export const ProjectsSection = () => {
                   >
                     <Icon className="w-24 h-24 text-primary/40 relative z-10" />
                   </motion.div>
-                  {project.status === "Live" && (
-                    <motion.div
-                      className="absolute top-4 right-4 px-3 py-1 bg-green-500 text-white text-xs font-semibold rounded-full"
-                      initial={{ scale: 0, rotate: -180 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      Live
-                    </motion.div>
-                  )}
-                  {project.status === "In Progress" && (
-                    <motion.div
-                      className="absolute top-4 right-4 px-3 py-1 bg-yellow-500 text-white text-xs font-semibold rounded-full"
-                      initial={{ scale: 0, rotate: -180 }}
-                      whileInView={{ scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                      animate={{
-                        boxShadow: [
-                          "0 0 0 0 rgba(234, 179, 8, 0.4)",
-                          "0 0 0 10px rgba(234, 179, 8, 0)",
-                        ],
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      In Progress
-                    </motion.div>
-                  )}
                 </div>
 
                 <div className="p-8">
