@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Send, Heart } from "lucide-react";
+import { Github, Linkedin, Send } from "lucide-react";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -120,18 +120,6 @@ export const Footer = () => {
               >
                 nathisemere5@gmail.com
               </a>
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-12 pt-8 border-t border-border">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground text-center md:text-left">
-              © {currentYear} Nathnael Semere Assefa. All rights reserved.
-            </p>
-            <p className="text-sm text-muted-foreground flex items-center gap-1">
-              Built with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> in
-              Ethiopia
             </p>
           </div>
         </div>
