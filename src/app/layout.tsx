@@ -18,6 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <Script
+          id="orchids-browser-logs"
+          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts/orchids-browser-logs.js"
+          strategy="afterInteractive"
+          data-orchids-project-id="e4c13527-9912-43d6-a277-d86b0ee39207"
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
