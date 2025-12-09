@@ -9,30 +9,35 @@ const contactInfo = [
     label: "Email",
     value: "nathisemere5@gmail.com",
     href: "mailto:nathisemere5@gmail.com",
+    isExternal: false,
   },
   {
     icon: Phone,
     label: "Phone",
     value: "+251 979310820",
     href: "tel:+251979310820",
+    isExternal: false,
   },
   {
     icon: Phone,
     label: "Phone (Alt)",
     value: "+251 799110820",
     href: "tel:+251799110820",
+    isExternal: false,
   },
   {
     icon: MessageCircle,
     label: "Telegram",
     value: "@Natuh21",
     href: "https://t.me/Natuh21",
+    isExternal: true,
   },
   {
     icon: MapPin,
     label: "Location",
     value: "Ethiopia",
     href: "https://www.google.com/maps/place/Ethiopia",
+    isExternal: true,
   },
 ];
 
@@ -58,27 +63,24 @@ const socialLinks = [
 ];
 
 export const ContactSection = () => {
-  const handleLinkClick = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Handle mailto and tel links normally
+  const handleLinkClick = (href: string, isExternal: boolean, e: React.MouseEvent<HTMLAnchorElement>) => {
+    // For mailto and tel links, let default behavior handle them
     if (href.startsWith("mailto:") || href.startsWith("tel:")) {
-      return; // Let default behavior handle these
+      return;
     }
 
     // For external links (http/https), handle iframe context
-    if (href.startsWith("http")) {
+    if (isExternal && href.startsWith("http")) {
       e.preventDefault();
       
-      // Check if we're in an iframe
       const isInIframe = window.self !== window.top;
       
       if (isInIframe) {
-        // Post message to parent to open in new tab
         window.parent.postMessage(
           { type: "OPEN_EXTERNAL_URL", data: { url: href } },
           "*"
         );
       } else {
-        // Not in iframe, open normally
         window.open(href, "_blank", "noopener,noreferrer");
       }
     }
@@ -172,9 +174,9 @@ export const ContactSection = () => {
                     <motion.a
                       key={item.label}
                       href={item.href}
-                      onClick={(e) => handleLinkClick(item.href, e)}
-                      target={item.href.startsWith("http") ? "_blank" : undefined}
-                      rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      onClick={(e) => handleLinkClick(item.href, item.isExternal, e)}
+                      target={item.isExternal ? "_blank" : undefined}
+                      rel={item.isExternal ? "noopener noreferrer" : undefined}
                       className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all group cursor-pointer"
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -221,7 +223,7 @@ export const ContactSection = () => {
                     <motion.a
                       key={social.label}
                       href={social.href}
-                      onClick={(e) => handleLinkClick(social.href, e)}
+                      onClick={(e) => handleLinkClick(social.href, social.href.startsWith("http"), e)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all cursor-pointer ${social.color}`}
