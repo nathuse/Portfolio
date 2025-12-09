@@ -13,6 +13,24 @@ export const Footer = () => {
     }
   };
 
+  const handleExternalLink = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    
+    // Check if we're in an iframe
+    const isInIframe = window.self !== window.top;
+    
+    if (isInIframe) {
+      // Post message to parent to open in new tab
+      window.parent.postMessage(
+        { type: "OPEN_EXTERNAL_URL", data: { url: href } },
+        "*"
+      );
+    } else {
+      // Not in iframe, open normally
+      window.open(href, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <footer className="border-t border-border bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -72,27 +90,24 @@ export const Footer = () => {
             <div className="flex gap-3">
               <a
                 href="https://github.com/nathuse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110"
+                onClick={(e) => handleExternalLink("https://github.com/nathuse", e)}
+                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
                 aria-label="GitHub"
               >
                 <Github className="w-5 h-5" />
               </a>
               <a
                 href="https://www.linkedin.com/in/nathnael-semere-003721335"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110"
+                onClick={(e) => handleExternalLink("https://www.linkedin.com/in/nathnael-semere-003721335", e)}
+                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
                 href="https://t.me/Natuh21"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110"
+                onClick={(e) => handleExternalLink("https://t.me/Natuh21", e)}
+                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
                 aria-label="Telegram"
               >
                 <Send className="w-5 h-5" />
