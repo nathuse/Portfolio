@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,7 +55,11 @@ export const Navigation = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Link href="#home" className="flex items-center space-x-2 group">
+            <a 
+              href="#home" 
+              onClick={(e) => scrollToSection(e, "#home")}
+              className="flex items-center space-x-2 group cursor-pointer"
+            >
               <motion.div
                 className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center transition-transform"
                 whileHover={{ scale: 1.1, rotate: 5 }}
@@ -70,7 +73,7 @@ export const Navigation = () => {
               >
                 Nathnael Semere
               </motion.span>
-            </Link>
+            </a>
           </motion.div>
 
           {/* Desktop Navigation */}
