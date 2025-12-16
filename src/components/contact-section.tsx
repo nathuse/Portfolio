@@ -33,10 +33,10 @@ const contactInfo = [
     isExternal: true,
   },
   {
-    icon: MapPin,
-    label: "Location",
-    value: "Ethiopia",
-    href: "https://www.google.com/maps/place/Ethiopia",
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "+251 979310820",
+    href: "https://wa.me/251979310820",
     isExternal: true,
   },
 ];
