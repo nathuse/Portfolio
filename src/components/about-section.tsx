@@ -5,17 +5,17 @@ import { GraduationCap, Briefcase, MapPin, Code2, TrendingUp } from "lucide-reac
 import Image from "next/image";
 
 const skills = [
-  "Next.js",
-  "React",
-  "TypeScript",
-  "Node.js",
-  "Tailwind CSS",
-  "UI/UX Design",
-  "Business Strategy",
-  "Project Management",
-  "Database Design",
-  "API Development",
-];
+"Next.js",
+"React",
+"TypeScript",
+"Node.js",
+"Tailwind CSS",
+"UI/UX Design",
+"Business Strategy",
+"Project Management",
+"Database Design",
+"API Development"];
+
 
 export const AboutSection = () => {
   // Animation variants
@@ -24,9 +24,9 @@ export const AboutSection = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-      },
-    },
+        staggerChildren: 0.1
+      }
+    }
   };
 
   const cardVariants = {
@@ -37,9 +37,9 @@ export const AboutSection = () => {
       transition: {
         type: "spring",
         stiffness: 80,
-        damping: 15,
-      },
-    },
+        damping: 15
+      }
+    }
   };
 
   const skillVariants = {
@@ -51,9 +51,9 @@ export const AboutSection = () => {
         delay: i * 0.05,
         type: "spring",
         stiffness: 200,
-        damping: 12,
-      },
-    }),
+        damping: 12
+      }
+    })
   };
 
   return (
@@ -64,15 +64,15 @@ export const AboutSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+          className="text-center mb-16">
+
           <motion.h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
+            transition={{ duration: 0.5 }}>
+
             About Me
           </motion.h2>
           <motion.p
@@ -80,8 +80,8 @@ export const AboutSection = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
+            transition={{ delay: 0.2, duration: 0.5 }}>
+
             Passionate about creating impactful solutions that bridge technology
             and business
           </motion.p>
@@ -92,25 +92,25 @@ export const AboutSection = () => {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-        >
+          viewport={{ once: true }}>
+
             <motion.div
-              variants={cardVariants}
-              whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
-              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
-            >
+            variants={cardVariants}
+            whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+            className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+
               <div className="flex flex-col sm:flex-row gap-6 mb-6">
                 <motion.div
-                  className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
+                className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}>
+
                   <Image
-                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765882282926.png?width=8000&height=8000&resize=contain"
-                    alt="Nathnael Semere Assefa"
-                    fill
-                    className="object-cover"
-                  />
+                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765882282926.png?width=8000&height=8000&resize=contain"
+                  alt="Nathnael Semere Assefa"
+                  fill
+                  className="object-cover !w-full !h-[157px] !max-w-full" />
+
                 </motion.div>
                 <div>
                   <h3 className="text-2xl font-bold mb-4">My Journey</h3>
@@ -139,22 +139,22 @@ export const AboutSection = () => {
 
           <motion.div
             variants={containerVariants}
-            className="space-y-6"
-          >
+            className="space-y-6">
+
             <motion.div
               variants={cardVariants}
               whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
-            >
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
+
               <motion.div
                 className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}
-              >
+                whileHover={{ x: 5 }}>
+
                 <motion.div
                   className="p-3 bg-primary/10 rounded-lg"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
+
                   <GraduationCap className="w-6 h-6 text-primary" />
                 </motion.div>
                 <div>
@@ -168,8 +168,8 @@ export const AboutSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}
-                >
+                  transition={{ delay: 0.1 }}>
+
                   <span className="text-primary mt-1">•</span>
                   <span>Bachelor's in Software Engineering</span>
                 </motion.li>
@@ -178,8 +178,8 @@ export const AboutSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                >
+                  transition={{ delay: 0.2 }}>
+
                   <span className="text-primary mt-1">•</span>
                   <span>Bachelor's in Business Administration & Information Systems</span>
                 </motion.li>
@@ -189,17 +189,17 @@ export const AboutSection = () => {
             <motion.div
               variants={cardVariants}
               whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
-            >
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
+
               <motion.div
                 className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}
-              >
+                whileHover={{ x: 5 }}>
+
                 <motion.div
                   className="p-3 bg-primary/10 rounded-lg"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
+
                   <MapPin className="w-6 h-6 text-primary" />
                 </motion.div>
                 <div>
@@ -213,17 +213,17 @@ export const AboutSection = () => {
             <motion.div
               variants={cardVariants}
               whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border"
-            >
+              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
+
               <motion.div
                 className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}
-              >
+                whileHover={{ x: 5 }}>
+
                 <motion.div
                   className="p-3 bg-primary/10 rounded-lg"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}
-                >
+                  transition={{ duration: 0.5 }}>
+
                   <Briefcase className="w-6 h-6 text-primary" />
                 </motion.div>
                 <div>
@@ -235,16 +235,16 @@ export const AboutSection = () => {
                 <motion.span
                   className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                  whileTap={{ scale: 0.95 }}>
+
                   <Code2 className="w-4 h-4" />
                   Full-Stack Development
                 </motion.span>
                 <motion.span
                   className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
                   whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                  whileTap={{ scale: 0.95 }}>
+
                   <TrendingUp className="w-4 h-4" />
                   Business Strategy
                 </motion.span>
@@ -259,32 +259,32 @@ export const AboutSection = () => {
           transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
           whileHover={{ y: -5 }}
-          className="bg-card rounded-2xl p-8 shadow-lg border border-border"
-        >
+          className="bg-card rounded-2xl p-8 shadow-lg border border-border">
+
           <h3 className="text-2xl font-bold mb-6 text-center">Skills & Technologies</h3>
           <div className="flex flex-wrap justify-center gap-3">
-            {skills.map((skill, index) => (
-              <motion.span
-                key={skill}
-                custom={index}
-                variants={skillVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                whileHover={{
-                  scale: 1.15,
-                  rotate: [0, -5, 5, -5, 0],
-                  transition: { duration: 0.3 },
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg font-medium transition-all cursor-default"
-              >
+            {skills.map((skill, index) =>
+            <motion.span
+              key={skill}
+              custom={index}
+              variants={skillVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              whileHover={{
+                scale: 1.15,
+                rotate: [0, -5, 5, -5, 0],
+                transition: { duration: 0.3 }
+              }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg font-medium transition-all cursor-default">
+
                 {skill}
               </motion.span>
-            ))}
+            )}
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
