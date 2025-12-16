@@ -94,32 +94,48 @@ export const AboutSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
-            className="bg-card rounded-2xl p-8 shadow-lg border border-border"
-          >
-            <h3 className="text-2xl font-bold mb-6">My Journey</h3>
-            <p className="text-muted-foreground leading-relaxed mb-6">
-              I'm a software engineer with a unique blend of technical expertise
-              and business acumen. With bachelor's degrees in both{" "}
-              <span className="text-foreground font-semibold">
-                Software Engineering
-              </span>{" "}
-              and{" "}
-              <span className="text-foreground font-semibold">
-                Business Administration & Information Systems
-              </span>
-              , I specialize in building practical, user-focused solutions that
-              make a real impact.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Based in Ethiopia, I'm always learning, experimenting, and looking
-              for opportunities to work on meaningful projects. I enjoy connecting
-              technical work with real business needs, ensuring that every
-              solution I build serves a purpose and creates value.
-            </p>
-          </motion.div>
+            <motion.div
+              variants={cardVariants}
+              whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+            >
+              <div className="flex flex-col sm:flex-row gap-6 mb-6">
+                <motion.div
+                  className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Image
+                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765882282926.png?width=8000&height=8000&resize=contain"
+                    alt="Nathnael Semere Assefa"
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-4">My Journey</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    I'm a software engineer with a unique blend of technical expertise
+                    and business acumen. With bachelor's degrees in both{" "}
+                    <span className="text-foreground font-semibold">
+                      Software Engineering
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-foreground font-semibold">
+                      Business Administration & Information Systems
+                    </span>
+                    , I specialize in building practical, user-focused solutions that
+                    make a real impact.
+                  </p>
+                </div>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Based in Ethiopia, I'm always learning, experimenting, and looking
+                for opportunities to work on meaningful projects. I enjoy connecting
+                technical work with real business needs, ensuring that every
+                solution I build serves a purpose and creates value.
+              </p>
+            </motion.div>
 
           <motion.div
             variants={containerVariants}
