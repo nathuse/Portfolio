@@ -101,15 +101,15 @@ export const AboutSection = () => {
 
               <div className="flex flex-col sm:flex-row gap-6 mb-6">
                   <motion.div
-                  className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}>
+                className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}>
 
                     <Image
-                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765884626187.png?width=8000&height=8000&resize=contain"
-                    alt="Nathnael Semere Assefa"
-                    fill
-                    className="object-cover !w-full !h-[159px] !max-w-full" />
+                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765884626187.png?width=8000&height=8000&resize=contain"
+                  alt="Nathnael Semere Assefa"
+                  fill
+                  className="object-cover !w-full !h-[199px] !max-w-full" />
 
                   </motion.div>
                 <div>
