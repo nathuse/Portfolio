@@ -88,39 +88,37 @@ export const ProjectsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           {projects.map((project, index) => {
-            const Icon = project.icon;
-            return (
-              <motion.div
-                key={project.title}
-                variants={projectVariants}
-                whileHover={{
-                  y: -10,
-                  scale: 1.02,
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                  transition: { duration: 0.3 },
-                }}
-                className="group bg-card rounded-2xl overflow-hidden shadow-lg border border-border"
-              >
-                <div className="relative h-64 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 flex items-center justify-center overflow-hidden">
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"
-                    animate={{
-                      x: ["-100%", "100%"],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                  <motion.div
-                    initial={{ scale: 1, rotate: 0 }}
-                    whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ duration: 0.4, type: "spring", stiffness: 150 }}
-                  >
-                    <Icon className="w-24 h-24 text-primary/40 relative z-10" />
-                  </motion.div>
-                </div>
+              return (
+                <motion.div
+                  key={project.title}
+                  variants={projectVariants}
+                  whileHover={{
+                    y: -10,
+                    scale: 1.02,
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                    transition: { duration: 0.3 },
+                  }}
+                  className="group bg-card rounded-2xl overflow-hidden shadow-lg border border-border"
+                >
+                  <div className="relative h-64 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 flex items-center justify-center overflow-hidden">
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"
+                      animate={{
+                        x: ["-100%", "100%"],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-contain p-8"
+                    />
+                  </div>
 
                 <div className="p-8">
                   <motion.h3
