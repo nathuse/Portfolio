@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Briefcase, MapPin, Code2, TrendingUp } from "lucide-react";
+import Image from "next/image";
 
 const skills = [
   "Next.js",
