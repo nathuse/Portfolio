@@ -109,7 +109,7 @@ export const AboutSection = () => {
                   src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765882282926.png?width=8000&height=8000&resize=contain"
                   alt="Nathnael Semere Assefa"
                   fill
-                  className="object-cover !w-full !h-[157px] !max-w-full" />
+                  className="object-cover !w-full !h-[159px] !max-w-full" />
 
                 </motion.div>
                 <div>
