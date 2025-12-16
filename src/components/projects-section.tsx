@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink, Building2, Plane } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 const projects = [
   {
@@ -9,7 +10,7 @@ const projects = [
     description:
       "A comprehensive website for a construction company showcasing their services, projects, and expertise. Built with modern web technologies to provide an excellent user experience and professional online presence.",
     link: "https://tabuconstruction.com",
-    icon: Building2,
+    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881616542.png?width=8000&height=8000&resize=contain",
     tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
     status: "Live",
   },
@@ -18,7 +19,7 @@ const projects = [
     description:
       "An immersive tour and travel company website designed to showcase Ethiopia's beautiful destinations and travel packages. Features engaging visuals and intuitive navigation for seamless trip planning.",
     link: "#",
-    icon: Plane,
+    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881674539.png?width=8000&height=8000&resize=contain",
     tags: ["Next.js", "TypeScript", "UI/UX Design", "Travel Platform"],
     status: "In Progress",
   },
