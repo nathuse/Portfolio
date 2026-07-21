@@ -8,7 +8,7 @@ const projects = [
   {
     title: "Tabu Construction",
     description:
-      "A comprehensive website for a construction company showcasing their services, projects, and expertise. Built with modern web technologies to provide an excellent user experience and professional online presence.",
+      "A corporate website for a construction company, showcasing their services, completed projects, and expertise. Gave the business a credible online presence and a central place to send prospective clients — turning word-of-mouth referrals into a professional first impression.",
     link: "https://tabuconstruction.com",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881616542.png?width=8000&height=8000&resize=contain",
     tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
@@ -17,7 +17,7 @@ const projects = [
   {
     title: "Ethiotrails",
     description:
-      "An immersive tour and travel company website designed to showcase Ethiopia's beautiful destinations and travel packages. Features engaging visuals and intuitive navigation for seamless trip planning.",
+      "An immersive tour and travel company website designed to showcase Ethiopia's destinations and travel packages, making it easy for visitors to explore trips and get in touch. Built around engaging visuals and intuitive navigation for seamless trip planning.",
     link: "#",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881674539.png?width=8000&height=8000&resize=contain",
     tags: ["Next.js", "TypeScript", "UI/UX Design", "Travel Platform"],
@@ -26,18 +26,20 @@ const projects = [
   {
     title: "Elume",
     description:
-      "A furnished apartment rental platform for Addis Ababa, letting guests browse fully-furnished units, view detailed photo galleries, and manage bookings online. Includes an admin dashboard for property owners to handle listings and reservations end to end.",
+      "A furnished-apartment rental platform for Addis Ababa where guests browse fully-furnished units, view detailed photo galleries, and book online in a few clicks. A companion admin dashboard lets property owners manage listings and reservations end to end — replacing scattered manual booking with a single system.",
     link: "https://elumeapartment.com",
     image: "/projects/elume.jpg",
+    imageFit: "cover",
     tags: ["Next.js", "React", "Booking Platform", "Admin Dashboard"],
     status: "Live",
   },
   {
     title: "Legacy Law Firm",
     description:
-      "A polished website for a full-service Ethiopian law firm advising international organizations, corporations, and individuals. Showcases practice areas, firm history, and client testimonials, with fee calculators and multi-channel consultation booking.",
+      "A polished website for a full-service Ethiopian law firm advising international organizations, corporations, and individuals. Presents practice areas, firm history, and client testimonials, with fee calculators and one-tap consultation booking over email, phone, WhatsApp, and Telegram — making it simple for prospective clients to reach the firm.",
     link: "https://legacylawfirmethiopia.com",
     image: "/projects/legacy.jpg",
+    imageFit: "cover",
     tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
     status: "Live",
   },
@@ -55,11 +57,10 @@ export const ProjectsSection = () => {
   };
 
   const projectVariants = {
-    hidden: { opacity: 0, y: 50, rotateX: -15 },
+    hidden: { opacity: 0, y: 24 },
     visible: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
       transition: {
         type: "spring",
         stiffness: 70,
@@ -69,14 +70,14 @@ export const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, type: "spring" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <motion.h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
@@ -134,7 +135,11 @@ export const ProjectsSection = () => {
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-contain p-8"
+                      className={
+                        project.imageFit === "cover"
+                          ? "object-cover object-top"
+                          : "object-contain p-8"
+                      }
                     />
                   </div>
 

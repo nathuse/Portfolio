@@ -159,6 +159,16 @@ export const HeroSection = () => {
             >
               Get In Touch
             </motion.button>
+            <motion.a
+              href="/Nathnael-Semere-Assefa-CV.pdf"
+              download
+              className="flex items-center justify-center gap-2 px-8 py-4 border border-border text-foreground rounded-xl font-semibold transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Download CV
+              <Download className="w-5 h-5" />
+            </motion.a>
           </motion.div>
 
           <motion.div
