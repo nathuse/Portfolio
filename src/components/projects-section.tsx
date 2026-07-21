@@ -23,6 +23,24 @@ const projects = [
     tags: ["Next.js", "TypeScript", "UI/UX Design", "Travel Platform"],
     status: "In Progress",
   },
+  {
+    title: "Elume",
+    description:
+      "A furnished apartment rental platform for Addis Ababa, letting guests browse fully-furnished units, view detailed photo galleries, and manage bookings online. Includes an admin dashboard for property owners to handle listings and reservations end to end.",
+    link: "https://elumeapartment.com",
+    image: "/projects/elume.jpg",
+    tags: ["Next.js", "React", "Booking Platform", "Admin Dashboard"],
+    status: "Live",
+  },
+  {
+    title: "Legacy Law Firm",
+    description:
+      "A polished website for a full-service Ethiopian law firm advising international organizations, corporations, and individuals. Showcases practice areas, firm history, and client testimonials, with fee calculators and multi-channel consultation booking.",
+    link: "https://legacylawfirmethiopia.com",
+    image: "/projects/legacy.jpg",
+    tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
+    status: "Live",
+  },
 ];
 
 export const ProjectsSection = () => {
