@@ -18,10 +18,10 @@ const projects = [
     title: "Ethiotrails",
     description:
       "An immersive tour and travel company website designed to showcase Ethiopia's destinations and travel packages, making it easy for visitors to explore trips and get in touch. Built around engaging visuals and intuitive navigation for seamless trip planning.",
-    link: "#",
+    link: "https://www.ethiotrails.com",
     image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881674539.png?width=8000&height=8000&resize=contain",
     tags: ["Next.js", "TypeScript", "UI/UX Design", "Travel Platform"],
-    status: "In Progress",
+    status: "Live",
   },
   {
     title: "Elume",
