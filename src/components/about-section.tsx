@@ -1,290 +1,205 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GraduationCap, Briefcase, MapPin, Code2, TrendingUp } from "lucide-react";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Briefcase, GraduationCap, MapPin, Rocket, Scan } from "lucide-react";
 
-const skills = [
-"Next.js",
-"React",
-"TypeScript",
-"Node.js",
-"Tailwind CSS",
-"UI/UX Design",
-"Business Strategy",
-"Project Management",
-"Database Design",
-"API Development"];
+const chapters = [
+  {
+    num: "01",
+    title: "Two degrees, one lens",
+    text: "I studied Software Engineering and Business Administration & Information Systems side by side. Ever since, I can't look at code without seeing the business case — or at a business problem without sketching the system.",
+    icon: GraduationCap,
+    handle: "@education",
+  },
+  {
+    num: "02",
+    title: "First client sites",
+    text: "Local businesses became my first clients — a construction company, then a full-service law firm. Word-of-mouth reputations turned into credible online presences.",
+    icon: Briefcase,
+    handle: "@clients",
+  },
+  {
+    num: "03",
+    title: "From websites to platforms",
+    text: "Elume let guests book furnished apartments in Addis Ababa online, with an admin dashboard replacing scattered manual bookings. Ethiotrails brought Ethiopia's destinations to travelers worldwide.",
+    icon: Rocket,
+    handle: "@products",
+  },
+  {
+    num: "04",
+    title: "Beyond the browser",
+    text: "Now I'm experimenting past the web — augmented-reality dining menus you can view at true scale from a QR code, and computer-vision prototypes for road safety.",
+    icon: Scan,
+    handle: "@rnd",
+  },
+  {
+    num: "05",
+    title: "The journey continues",
+    text: "Based in Ethiopia, always learning. Every solution I build has to serve a purpose and create value — that's the whole point.",
+    icon: MapPin,
+    handle: "@today",
+  },
+];
 
+// Weaving S-curve through alternating anchors, like the reference video.
+// Built in pixel coordinates measured from the timeline box: dash-based path
+// drawing (framer's pathLength) miscomputes in Chrome when the viewBox is
+// stretched with non-scaling strokes, so the geometry must be 1:1.
+const buildCurve = (count: number, w: number, h: number) => {
+  const seg = h / count;
+  const anchors = Array.from({ length: count }, (_, i) => ({
+    x: w * (i % 2 === 0 ? 0.86 : 0.14),
+    y: seg * (i + 0.5),
+  }));
+  let d = `M ${w / 2} 0`;
+  let prev = { x: w / 2, y: 0 };
+  for (const a of anchors) {
+    d += ` C ${prev.x} ${prev.y + seg * 0.45}, ${a.x} ${a.y - seg * 0.45}, ${a.x} ${a.y}`;
+    prev = a;
+  }
+  d += ` C ${prev.x} ${prev.y + seg * 0.45}, ${w / 2} ${h - seg * 0.3}, ${w / 2} ${h}`;
+  return { d, anchors };
+};
+
+const cardReveal = {
+  initial: { opacity: 0, y: 60, filter: "blur(14px)" },
+  whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+  viewport: { once: false, amount: 0.45 },
+  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+};
 
 export const AboutSection = () => {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  const timelineRef = useRef<HTMLDivElement>(null);
+  // Symmetric offsets make progress equal the fraction of the timeline that
+  // has crossed the 80%-viewport line — so the tip of the drawn curve rides
+  // that line, staying just below what the user is reading, never racing off.
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 0.8", "end 0.8"],
+  });
+  const drawProgress = useTransform(scrollYProgress, [0, 0.95], [0, 1]);
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 80,
-        damping: 15
-      }
-    }
-  };
-
-  const skillVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delay: i * 0.05,
-        type: "spring",
-        stiffness: 200,
-        damping: 12
-      }
-    })
-  };
+  const [box, setBox] = useState({ w: 0, h: 0 });
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      setBox({ w: el.offsetWidth, h: el.offsetHeight });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const curve = box.h > 0 ? buildCurve(chapters.length, box.w, box.h) : null;
 
   return (
-    <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-muted/30">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          viewport={{ once: true }}
-          className="text-center mb-12">
+    <section
+      id="about"
+      className="relative overflow-hidden bg-[#D8D4C6] px-6 py-24 text-[#17150f] md:px-10 lg:pl-72 lg:pr-16"
+    >
+      {/* Blurred portrait backdrop */}
+      <img
+        src="/nathnael-cutout.png"
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-24 w-[520px] max-w-none -translate-x-1/2 opacity-25 blur-2xl"
+      />
 
-          <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}>
-
-            About Me
-          </motion.h2>
-          <motion.p
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}>
-
-            Passionate about creating impactful solutions that bridge technology
-            and business
-          </motion.p>
+      <div className="relative mx-auto max-w-4xl">
+        <motion.div {...cardReveal} viewport={{ once: true, amount: 0.4 }}>
+          <span className="inline-block rounded-full border border-[#17150f] px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+            Start Small · Grow Big
+          </span>
+          <h2 className="mt-5 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            About Me (&amp;)
+            <br />
+            <span className="opacity-60">My Journey</span>
+          </h2>
+          <p className="mt-5 max-w-md text-sm leading-relaxed opacity-70">
+            A software engineer with a business brain. What happened between the
+            first degree and today is easier to show than explain.
+          </p>
         </motion.div>
 
-        <motion.div
-          className="grid md:grid-cols-2 gap-8 mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}>
-
-            <motion.div
-            variants={cardVariants}
-            whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
-            className="bg-card rounded-2xl p-8 shadow-lg border border-border">
-
-              <div className="flex flex-col sm:flex-row gap-6 mb-6">
-                  <motion.div
-                className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-2xl overflow-hidden flex-shrink-0 mx-auto sm:mx-0"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}>
-
-                    <Image
-                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765884626187.png?width=8000&height=8000&resize=contain"
-                  alt="Nathnael Semere Assefa"
-                  fill
-                  className="object-cover !w-full !h-[199px] !max-w-full" />
-
-                  </motion.div>
-                <div>
-                  <h3 className="text-2xl font-bold mb-4">My Journey</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    I'm a software engineer with a unique blend of technical expertise
-                    and business acumen. With bachelor's degrees in both{" "}
-                    <span className="text-foreground font-semibold">
-                      Software Engineering
-                    </span>{" "}
-                    and{" "}
-                    <span className="text-foreground font-semibold">
-                      Business Administration & Information Systems
-                    </span>
-                    , I specialize in building practical, user-focused solutions that
-                    make a real impact.
-                  </p>
-                </div>
-              </div>
-              <p className="text-muted-foreground leading-relaxed">
-                Based in Ethiopia, I'm always learning, experimenting, and looking
-                for opportunities to work on meaningful projects. I enjoy connecting
-                technical work with real business needs, ensuring that every
-                solution I build serves a purpose and creates value.
-              </p>
-            </motion.div>
-
+        {/* Timeline */}
+        <div ref={timelineRef} className="relative mt-20">
+          {/* Straight guide line on mobile */}
+          <div className="absolute left-4 top-0 h-full w-px bg-[#17150f]/10 lg:hidden" />
           <motion.div
-            variants={containerVariants}
-            className="space-y-6">
+            style={{ scaleY: drawProgress }}
+            className="absolute left-4 top-0 h-full w-px origin-top bg-[#17150f]/50 lg:hidden"
+          />
+          {/* Curved path on desktop, drawn as you scroll */}
+          {curve && (
+            <>
+              <svg
+                className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+                viewBox={`0 0 ${box.w} ${box.h}`}
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d={curve.d}
+                  stroke="#17150f"
+                  strokeOpacity="0.22"
+                  strokeWidth="1.5"
+                  strokeDasharray="6 6"
+                />
+                <motion.path
+                  d={curve.d}
+                  stroke="#17150f"
+                  strokeOpacity="0.65"
+                  strokeWidth="1.5"
+                  style={{ pathLength: drawProgress }}
+                />
+              </svg>
+              {/* Dots on the curve (desktop) */}
+              {curve.anchors.map((a, i) => (
+                <span
+                  key={i}
+                  className="absolute hidden h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#17150f] bg-[#F2E900] lg:block"
+                  style={{ left: a.x, top: a.y }}
+                />
+              ))}
+            </>
+          )}
 
-            <motion.div
-              variants={cardVariants}
-              whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-
-              <motion.div
-                className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}>
-
-                <motion.div
-                  className="p-3 bg-primary/10 rounded-lg"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}>
-
-                  <GraduationCap className="w-6 h-6 text-primary" />
-                </motion.div>
-                <div>
-                  <h4 className="font-semibold text-lg">Education</h4>
-                  <p className="text-sm text-muted-foreground">Dual Degrees</p>
-                </div>
-              </motion.div>
-              <ul className="space-y-2 text-muted-foreground">
-                <motion.li
-                  className="flex items-start gap-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 }}>
-
-                  <span className="text-primary mt-1">•</span>
-                  <span>Bachelor's in Software Engineering</span>
-                </motion.li>
-                <motion.li
-                  className="flex items-start gap-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}>
-
-                  <span className="text-primary mt-1">•</span>
-                  <span>Bachelor's in Business Administration & Information Systems</span>
-                </motion.li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariants}
-              whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-
-              <motion.div
-                className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}>
-
-                <motion.div
-                  className="p-3 bg-primary/10 rounded-lg"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}>
-
-                  <MapPin className="w-6 h-6 text-primary" />
-                </motion.div>
-                <div>
-                  <h4 className="font-semibold text-lg">Location</h4>
-                  <p className="text-sm text-muted-foreground">Based in</p>
-                </div>
-              </motion.div>
-              <p className="text-muted-foreground">Ethiopia 🇪🇹</p>
-            </motion.div>
-
-            <motion.div
-              variants={cardVariants}
-              whileHover={{ scale: 1.02 }}
-              className="bg-card rounded-2xl p-6 shadow-lg border border-border">
-
-              <motion.div
-                className="flex items-center gap-4 mb-4"
-                whileHover={{ x: 5 }}>
-
-                <motion.div
-                  className="p-3 bg-primary/10 rounded-lg"
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.5 }}>
-
-                  <Briefcase className="w-6 h-6 text-primary" />
-                </motion.div>
-                <div>
-                  <h4 className="font-semibold text-lg">Focus Areas</h4>
-                  <p className="text-sm text-muted-foreground">What I do</p>
-                </div>
-              </motion.div>
-              <div className="flex flex-wrap gap-2 text-sm">
-                <motion.span
-                  className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}>
-
-                  <Code2 className="w-4 h-4" />
-                  Full-Stack Development
-                </motion.span>
-                <motion.span
-                  className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-full"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}>
-
-                  <TrendingUp className="w-4 h-4" />
-                  Business Strategy
-                </motion.span>
+          <div className="flex flex-col gap-16 lg:gap-24">
+            {chapters.map((chapter, i) => (
+              <div
+                key={chapter.num}
+                className={`relative flex pl-12 lg:w-1/2 lg:pl-0 ${
+                  i % 2 === 0
+                    ? "lg:self-start lg:pr-14"
+                    : "lg:self-end lg:pl-14"
+                }`}
+              >
+                <span className="absolute left-4 top-8 h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-[#17150f] bg-[#F2E900] lg:hidden" />
+                <motion.article
+                  {...cardReveal}
+                  className="w-full rounded-2xl border border-black/5 bg-[#E6E2D6]/85 p-6 shadow-[0_20px_50px_-20px_rgba(23,21,15,0.25)] backdrop-blur-md"
+                >
+                  <div className="text-5xl font-black text-[#F2E900] [text-shadow:0_1px_0_rgba(23,21,15,0.2)]">
+                    &apos;{chapter.num}
+                  </div>
+                  <h3 className="mt-3 text-lg font-bold">{chapter.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed opacity-75">
+                    {chapter.text}
+                  </p>
+                  <div className="mt-4 flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#17150f] text-[#F2E900]">
+                      <chapter.icon className="h-4 w-4" />
+                    </span>
+                    <span className="text-xs font-semibold opacity-60">
+                      {chapter.handle}
+                    </span>
+                  </div>
+                </motion.article>
               </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true, amount: 0.15 }}
-          whileHover={{ y: -5 }}
-          className="bg-card rounded-2xl p-8 shadow-lg border border-border">
-
-          <h3 className="text-2xl font-bold mb-6 text-center">Skills & Technologies</h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {skills.map((skill, index) =>
-            <motion.span
-              key={skill}
-              custom={index}
-              variants={skillVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              whileHover={{
-                scale: 1.15,
-                rotate: [0, -5, 5, -5, 0],
-                transition: { duration: 0.3 }
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 bg-secondary hover:bg-secondary/80 rounded-lg font-medium transition-all cursor-default">
-
-                {skill}
-              </motion.span>
-            )}
+            ))}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };

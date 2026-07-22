@@ -1,269 +1,137 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 
 const projects = [
   {
+    num: "01",
     title: "Tabu Construction",
     description:
-      "A corporate website for a construction company, showcasing their services, completed projects, and expertise. Gave the business a credible online presence and a central place to send prospective clients — turning word-of-mouth referrals into a professional first impression.",
+      "A corporate website for a construction company, showcasing their services, completed projects, and expertise — turning word-of-mouth referrals into a professional first impression.",
     link: "https://tabuconstruction.com",
-    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881616542.png?width=8000&height=8000&resize=contain",
-    tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
-    status: "Live",
+    image:
+      "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881616542.png?width=8000&height=8000&resize=contain",
+    tags: ["Next.js", "React", "Tailwind"],
   },
   {
+    num: "02",
     title: "Ethiotrails",
     description:
-      "An immersive tour and travel company website designed to showcase Ethiopia's destinations and travel packages, making it easy for visitors to explore trips and get in touch. Built around engaging visuals and intuitive navigation for seamless trip planning.",
+      "An immersive tour and travel website showcasing Ethiopia's destinations and travel packages, built around engaging visuals and intuitive navigation for seamless trip planning.",
     link: "https://www.ethiotrails.com",
-    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881674539.png?width=8000&height=8000&resize=contain",
-    tags: ["Next.js", "TypeScript", "UI/UX Design", "Travel Platform"],
-    status: "Live",
+    image:
+      "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/document-uploads/image-1765881674539.png?width=8000&height=8000&resize=contain",
+    tags: ["Next.js", "TypeScript", "UI/UX"],
   },
   {
+    num: "03",
     title: "Elume",
     description:
-      "A furnished-apartment rental platform for Addis Ababa where guests browse fully-furnished units, view detailed photo galleries, and book online in a few clicks. A companion admin dashboard lets property owners manage listings and reservations end to end — replacing scattered manual booking with a single system.",
+      "A furnished-apartment rental platform for Addis Ababa — guests browse units and book online, while an admin dashboard lets owners manage listings and reservations end to end.",
     link: "https://elumeapartment.com",
     image: "/projects/elume.jpg",
-    imageFit: "cover",
-    tags: ["Next.js", "React", "Booking Platform", "Admin Dashboard"],
-    status: "Live",
+    tags: ["Booking Platform", "Admin Dashboard", "React"],
   },
   {
+    num: "04",
     title: "Legacy Law Firm",
     description:
-      "A polished website for a full-service Ethiopian law firm advising international organizations, corporations, and individuals. Presents practice areas, firm history, and client testimonials, with fee calculators and one-tap consultation booking over email, phone, WhatsApp, and Telegram — making it simple for prospective clients to reach the firm.",
+      "A polished website for a full-service Ethiopian law firm — practice areas, fee calculators, and one-tap consultation booking over email, phone, WhatsApp, and Telegram.",
     link: "https://legacylawfirmethiopia.com",
     image: "/projects/legacy.jpg",
-    imageFit: "cover",
-    tags: ["Next.js", "React", "Tailwind CSS", "Responsive Design"],
-    status: "Live",
+    tags: ["Next.js", "Tailwind", "Responsive"],
   },
 ];
 
 export const ProjectsSection = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const projectVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 15,
-      },
-    },
-  };
+  const trackRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: trackRef });
+  const x = useTransform(scrollYProgress, [0.08, 0.92], ["0%", "-62%"]);
 
   return (
-    <section id="projects" className="py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Featured Projects
-          </motion.h2>
-          <motion.p
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Real-world solutions that make an impact
-          </motion.p>
-        </motion.div>
+    <section id="projects" className="relative bg-[#0e0d09] text-white">
+      <div ref={trackRef} className="relative h-[320vh]">
+        <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden px-6 md:px-10 lg:pl-72 lg:pr-0">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:pr-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="inline-block rounded-full border border-white/40 px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+                Selected Work
+              </span>
+              <h2 className="mt-4 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+                Built to Ship,
+                <br />
+                Made to Perform
+              </h2>
+            </motion.div>
+            <motion.p
+              className="max-w-sm text-sm leading-relaxed text-white/60"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              I&apos;ve helped businesses across different industries turn their
+              ideas into websites and platforms that look and work exactly how
+              they imagined. Here&apos;s a look at some of that work.
+            </motion.p>
+          </div>
 
-        <motion.div
-          className="grid md:grid-cols-2 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {projects.map((project, index) => {
-              return (
-                <motion.div
-                  key={project.title}
-                  variants={projectVariants}
-                  whileHover={{
-                    y: -10,
-                    scale: 1.02,
-                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                    transition: { duration: 0.3 },
-                  }}
-                  className="group bg-card rounded-2xl overflow-hidden shadow-lg border border-border"
-                >
-                  <div className="relative h-64 bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20 flex items-center justify-center overflow-hidden">
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent"
-                      animate={{
-                        x: ["-100%", "100%"],
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "linear",
-                      }}
-                    />
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className={
-                        project.imageFit === "cover"
-                          ? "object-cover object-top"
-                          : "object-contain p-8"
-                      }
-                    />
-                  </div>
-
-                <div className="p-8">
-                  <motion.h3
-                    className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    {project.title}
-                  </motion.h3>
-                  <motion.p
-                    className="text-muted-foreground leading-relaxed mb-6"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    {project.description}
-                  </motion.p>
-
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.map((tag, tagIndex) => (
-                      <motion.span
+          <motion.div style={{ x }} className="mt-12 flex gap-6">
+            {projects.map((project) => (
+              <article
+                key={project.num}
+                className="group relative flex w-[82vw] shrink-0 flex-col overflow-hidden rounded-2xl bg-[#1b1a14] sm:w-[460px]"
+              >
+                <div className="flex items-center justify-between p-4">
+                  <span className="rounded-full border border-white/20 px-2.5 py-0.5 text-[10px] font-bold">
+                    {project.num}
+                  </span>
+                  <div className="flex gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
                         key={tag}
-                        className="px-3 py-1 bg-secondary text-secondary-foreground text-sm rounded-lg"
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.4 + tagIndex * 0.05 }}
-                        whileHover={{
-                          scale: 1.1,
-                          backgroundColor: "var(--primary)",
-                          color: "var(--primary-foreground)",
-                        }}
+                        className="rounded-full border border-white/20 px-2.5 py-0.5 text-[10px] font-medium text-white/70"
                       >
                         {tag}
-                      </motion.span>
+                      </span>
                     ))}
                   </div>
-
-                  {project.status === "Live" && (
-                    <motion.a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold"
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.15)",
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Visit Website
-                      <motion.div
-                        animate={{ x: [0, 3, 0] }}
-                        transition={{
-                          duration: 1,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </motion.div>
-                    </motion.a>
-                  )}
-                  {project.status === "In Progress" && (
-                    <motion.div
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-muted text-muted-foreground rounded-xl font-semibold cursor-not-allowed"
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                    >
-                      Coming Soon
-                    </motion.div>
-                  )}
                 </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="mt-12 text-center"
-        >
-          <motion.p
-            className="text-muted-foreground mb-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-          >
-            Want to see more of my work?
-          </motion.p>
-          <motion.a
-            href="https://github.com/nathuse"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-secondary text-secondary-foreground rounded-xl font-semibold"
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            View GitHub Profile
-            <motion.div
-              animate={{ x: [0, 3, 0] }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <ExternalLink className="w-4 h-4" />
-            </motion.div>
-          </motion.a>
-        </motion.div>
+                <div className="h-56 overflow-hidden px-4">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                    className="h-full w-full rounded-lg object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="flex items-end justify-between gap-4 p-5">
+                  <div>
+                    <h3 className="text-xl font-bold">{project.title}</h3>
+                    <p className="mt-1.5 text-xs leading-relaxed text-white/60">
+                      {project.description}
+                    </p>
+                  </div>
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${project.title}`}
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F2E900] text-[#17150f] transition-transform hover:scale-110"
+                  >
+                    <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </article>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
