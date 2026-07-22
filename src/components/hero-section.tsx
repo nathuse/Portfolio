@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { Download, Github, Hammer, Linkedin, ShieldCheck, Sparkles, Target, Zap } from "lucide-react";
+import { useRef, useState } from "react";
+import { Download, Github, Hammer, LayoutGrid, Linkedin, ShieldCheck, Sparkles, Target, Zap } from "lucide-react";
 import { motion, useMotionTemplate, useScroll, useTransform } from "framer-motion";
 
 const NAME = "NATHNAEL";
@@ -24,6 +24,7 @@ const blurIn = (delay: number) => ({
 
 export const HeroSection = () => {
   const heroRef = useRef<HTMLElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"],
@@ -55,11 +56,55 @@ export const HeroSection = () => {
       ref={heroRef}
       className="relative min-h-[100svh] overflow-hidden bg-[#D8D4C6] text-[#17150f]"
     >
+      {/* Mobile top bar: brand chip, CTA, menu */}
+      <motion.div
+        style={{ opacity: sidesOpacity }}
+        className="absolute inset-x-4 top-4 z-20 md:hidden"
+      >
+        <motion.div className="flex items-center justify-between" {...blurIn(0.2)}>
+          <span className="rounded-xl bg-[#F2E900] px-3 py-2 text-sm font-black tracking-tight">
+            NATHNAEL<span className="align-super text-[8px]">®</span>
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="rounded-xl bg-[#F2E900] px-3.5 py-2 text-sm font-bold"
+            >
+              Get In Touch
+            </button>
+            <button
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label="Menu"
+              aria-expanded={menuOpen}
+              className="rounded-xl bg-[#EFECE2]/90 p-2.5"
+            >
+              <LayoutGrid className="h-4 w-4" />
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+      {menuOpen && (
+        <div className="absolute right-4 top-[4.5rem] z-30 flex w-44 flex-col rounded-xl bg-[#17150f]/95 p-2 text-white backdrop-blur-md md:hidden">
+          {["home", "about", "projects", "services", "contact"].map((id) => (
+            <button
+              key={id}
+              onClick={() => {
+                setMenuOpen(false);
+                scrollToSection(id);
+              }}
+              className="rounded-lg px-4 py-2.5 text-left text-xs font-bold uppercase tracking-widest hover:bg-white/10"
+            >
+              {id === "about" ? "About Me" : id}
+            </button>
+          ))}
+        </div>
+      )}
+
       {/* Giant staggered name */}
       <motion.h1
         aria-label={NAME}
         style={{ y: nameY, opacity: nameOpacity }}
-        className="absolute inset-x-0 top-[8vh] z-[1] flex justify-center overflow-hidden font-black uppercase leading-none tracking-tight text-[#F2E900] select-none text-[13vw] md:text-[15.5vw]"
+        className="absolute inset-x-0 top-[9vh] z-[1] flex justify-center overflow-hidden font-black uppercase leading-none tracking-tight text-[#F2E900] select-none text-[14.5vw] md:top-[8vh] md:text-[15.5vw]"
       >
         {NAME.split("").map((letter, i) => (
           <motion.span
@@ -124,12 +169,12 @@ export const HeroSection = () => {
       {/* Portrait cutout, rising in front of the name */}
       <motion.div
         style={{ filter: portraitBlur, opacity: portraitOpacity, scale: portraitScale }}
-        className="pointer-events-none absolute bottom-0 left-1/2 z-[2] h-[48svh] md:h-[82svh] -translate-x-1/2"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-[2] h-[76svh] w-max md:h-[82svh] -translate-x-1/2"
       >
         <motion.img
           src="/nathnael-cutout.png"
           alt="Portrait of Nathnael Semere Assefa"
-          className="h-full w-auto object-contain object-bottom"
+          className="h-full w-auto max-w-none object-contain object-bottom"
           initial={{ opacity: 0, y: 140, filter: "blur(18px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ delay: 0.85, duration: 1.1, ease: EASE_OUT }}
@@ -139,17 +184,17 @@ export const HeroSection = () => {
       {/* Tagline over the portrait */}
       <motion.div
         style={{ y: taglineY, opacity: taglineOpacity }}
-        className="absolute top-[calc(8vh+15vw)] left-1/2 z-[4] w-full max-w-6xl -translate-x-1/2 px-6 md:top-auto md:bottom-[22svh] md:px-10"
+        className="absolute bottom-[23svh] left-1/2 z-[4] w-full max-w-6xl -translate-x-1/2 px-6 md:bottom-[22svh] md:px-10"
       >
         <div className="md:ml-[26%]">
-          <div className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#17150f] sm:text-5xl md:text-white md:[text-shadow:0_2px_24px_rgba(0,0,0,0.35)] lg:text-6xl">
+          <div className="text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-6xl">
             {["Code,", "Applied", "Differently."].map((line, i) => (
               <motion.span key={line} className="block" {...blurIn(1.6 + i * 0.12)}>
                 {line}
               </motion.span>
             ))}
           </div>
-          <motion.div className="mt-6 flex flex-wrap items-center gap-3" {...blurIn(2.4)}>
+          <motion.div className="mt-6 hidden flex-wrap items-center gap-3 md:flex" {...blurIn(2.4)}>
             <motion.button
               onClick={() => scrollToSection("projects")}
               className="rounded-md bg-[#F2E900] px-5 py-2.5 text-sm font-bold text-[#17150f]"
@@ -192,10 +237,10 @@ export const HeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Trait list, right */}
+      {/* Trait list: left-floating on mobile, right column on desktop */}
       <motion.div
         style={{ x: rightX, opacity: sidesOpacity }}
-        className="absolute bottom-[20svh] right-6 z-[3] hidden md:block lg:right-14"
+        className="absolute left-4 top-[37svh] z-[3] md:left-auto md:top-auto md:bottom-[20svh] md:right-6 lg:right-14"
       >
         <motion.ul
           className="flex w-40 flex-col gap-2.5 rounded-xl bg-[#2a2822]/80 p-4 text-white backdrop-blur-md"
@@ -214,10 +259,40 @@ export const HeroSection = () => {
         </motion.ul>
       </motion.div>
 
+      {/* Floating stat cards, mobile only */}
+      <motion.div
+        style={{ x: rightX, opacity: sidesOpacity }}
+        className="absolute right-4 top-[46svh] z-[3] md:hidden"
+      >
+        <motion.div
+          className="w-36 rounded-xl bg-[#2a2822]/80 p-4 text-center text-white backdrop-blur-md"
+          {...blurIn(2.2)}
+        >
+          <div className="text-4xl font-black text-[#F2E900]">2×</div>
+          <div className="mt-1 text-xs font-semibold">
+            Degrees, SWE &amp; Business
+          </div>
+        </motion.div>
+      </motion.div>
+      <motion.div
+        style={{ x: leftX, opacity: sidesOpacity }}
+        className="absolute bottom-[8svh] left-4 z-[3] md:hidden"
+      >
+        <motion.div
+          className="w-40 rounded-xl bg-[#2a2822]/80 p-4 text-white backdrop-blur-md"
+          {...blurIn(2.5)}
+        >
+          <div className="text-3xl font-black text-[#F2E900]">20+</div>
+          <div className="mt-1 text-xs font-medium opacity-80">
+            Projects built &amp; shipped
+          </div>
+        </motion.div>
+      </motion.div>
+
       {/* Bottom blurbs */}
       <motion.div style={{ opacity: sidesOpacity }}>
         <motion.p
-          className="absolute bottom-8 left-6 z-[3] hidden max-w-[220px] text-xs font-medium leading-relaxed opacity-70 lg:block lg:left-14"
+          className="absolute bottom-4 left-4 right-4 z-[3] rounded-lg bg-[#D8D4C6]/90 px-3 py-2 text-[13px] font-medium leading-relaxed backdrop-blur-md lg:bottom-8 lg:left-14 lg:right-auto lg:max-w-[220px] lg:bg-transparent lg:p-0 lg:text-xs lg:opacity-70 lg:backdrop-blur-none"
           {...blurIn(3)}
         >
           Software engineer &amp; business strategist. That&apos;s Nathnael.
