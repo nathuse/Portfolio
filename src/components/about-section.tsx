@@ -123,17 +123,11 @@ export const AboutSection = () => {
 
         {/* Timeline */}
         <div ref={timelineRef} className="relative mt-20">
-          {/* Straight guide line on mobile */}
-          <div className="absolute left-4 top-0 h-full w-px bg-[#17150f]/10 lg:hidden" />
-          <motion.div
-            style={{ scaleY: drawProgress }}
-            className="absolute left-4 top-0 h-full w-px origin-top bg-[#17150f]/50 lg:hidden"
-          />
-          {/* Curved path on desktop, drawn as you scroll */}
+          {/* Curved path, drawn as you scroll */}
           {curve && (
             <>
               <svg
-                className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+                className="pointer-events-none absolute inset-0 h-full w-full"
                 viewBox={`0 0 ${box.w} ${box.h}`}
                 fill="none"
                 aria-hidden
@@ -153,11 +147,11 @@ export const AboutSection = () => {
                   style={{ pathLength: drawProgress }}
                 />
               </svg>
-              {/* Dots on the curve (desktop) */}
+              {/* Dots on the curve */}
               {curve.anchors.map((a, i) => (
                 <span
                   key={i}
-                  className="absolute hidden h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#17150f] bg-[#F2E900] lg:block"
+                  className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#17150f] bg-[#F2E900]"
                   style={{ left: a.x, top: a.y }}
                 />
               ))}
@@ -168,13 +162,12 @@ export const AboutSection = () => {
             {chapters.map((chapter, i) => (
               <div
                 key={chapter.num}
-                className={`relative flex pl-12 lg:w-1/2 lg:pl-0 ${
+                className={`relative flex w-[86%] sm:w-[70%] lg:w-1/2 ${
                   i % 2 === 0
-                    ? "lg:self-start lg:pr-14"
-                    : "lg:self-end lg:pl-14"
+                    ? "self-start pr-4 lg:pr-14"
+                    : "self-end pl-4 lg:pl-14"
                 }`}
               >
-                <span className="absolute left-4 top-8 h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-[#17150f] bg-[#F2E900] lg:hidden" />
                 <motion.article
                   {...cardReveal}
                   className="w-full rounded-2xl border border-black/5 bg-[#E6E2D6]/85 p-6 shadow-[0_20px_50px_-20px_rgba(23,21,15,0.25)] backdrop-blur-md"

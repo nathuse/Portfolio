@@ -59,7 +59,7 @@ export const HeroSection = () => {
       <motion.h1
         aria-label={NAME}
         style={{ y: nameY, opacity: nameOpacity }}
-        className="absolute inset-x-0 top-[8vh] z-[1] flex justify-center overflow-hidden font-black uppercase leading-none tracking-tight text-[#F2E900] select-none text-[19vw] md:text-[15.5vw]"
+        className="absolute inset-x-0 top-[8vh] z-[1] flex justify-center overflow-hidden font-black uppercase leading-none tracking-tight text-[#F2E900] select-none text-[13vw] md:text-[15.5vw]"
       >
         {NAME.split("").map((letter, i) => (
           <motion.span
@@ -124,7 +124,7 @@ export const HeroSection = () => {
       {/* Portrait cutout, rising in front of the name */}
       <motion.div
         style={{ filter: portraitBlur, opacity: portraitOpacity, scale: portraitScale }}
-        className="pointer-events-none absolute bottom-0 left-1/2 z-[2] h-[68svh] md:h-[82svh] -translate-x-1/2"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-[2] h-[48svh] md:h-[82svh] -translate-x-1/2"
       >
         <motion.img
           src="/nathnael-cutout.png"
@@ -139,10 +139,10 @@ export const HeroSection = () => {
       {/* Tagline over the portrait */}
       <motion.div
         style={{ y: taglineY, opacity: taglineOpacity }}
-        className="absolute bottom-[24svh] left-1/2 z-[4] w-full max-w-6xl -translate-x-1/2 px-6 md:bottom-[22svh] md:px-10"
+        className="absolute top-[calc(8vh+15vw)] left-1/2 z-[4] w-full max-w-6xl -translate-x-1/2 px-6 md:top-auto md:bottom-[22svh] md:px-10"
       >
         <div className="md:ml-[26%]">
-          <div className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-6xl">
+          <div className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#17150f] sm:text-5xl md:text-white md:[text-shadow:0_2px_24px_rgba(0,0,0,0.35)] lg:text-6xl">
             {["Code,", "Applied", "Differently."].map((line, i) => (
               <motion.span key={line} className="block" {...blurIn(1.6 + i * 0.12)}>
                 {line}

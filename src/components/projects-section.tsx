@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
@@ -47,13 +47,39 @@ const projects = [
 
 export const ProjectsSection = () => {
   const trackRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: trackRef });
-  const x = useTransform(scrollYProgress, [0.08, 0.92], ["0%", "-62%"]);
+
+  // Measure exactly how far the track must travel so the last card ends
+  // fully in view on any screen size, instead of guessing a percentage.
+  const [shift, setShift] = useState(0);
+  useEffect(() => {
+    const measure = () => {
+      const sticky = stickyRef.current;
+      const cards = cardsRef.current;
+      if (!sticky || !cards) return;
+      const styles = getComputedStyle(sticky);
+      const visible =
+        sticky.clientWidth -
+        parseFloat(styles.paddingLeft) -
+        parseFloat(styles.paddingRight);
+      setShift(Math.max(0, cards.scrollWidth - visible));
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, []);
+  const x = useTransform(scrollYProgress, [0.08, 0.92], [0, -shift]);
 
   return (
     <section id="projects" className="relative bg-[#0e0d09] text-white">
       <div ref={trackRef} className="relative h-[320vh]">
-        <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden px-6 md:px-10 lg:pl-72 lg:pr-0">
+        <div
+          ref={stickyRef}
+          className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden px-6 md:px-10 lg:pl-72 lg:pr-0"
+        >
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:pr-16">
             <motion.div
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -83,7 +109,7 @@ export const ProjectsSection = () => {
             </motion.p>
           </div>
 
-          <motion.div style={{ x }} className="mt-12 flex gap-6">
+          <motion.div ref={cardsRef} style={{ x }} className="mt-12 flex gap-6">
             {projects.map((project) => (
               <article
                 key={project.num}
