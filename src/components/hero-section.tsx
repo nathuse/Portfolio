@@ -240,10 +240,10 @@ export const HeroSection = () => {
       {/* Trait list: left-floating on mobile, right column on desktop */}
       <motion.div
         style={{ x: rightX, opacity: sidesOpacity }}
-        className="absolute left-4 top-[37svh] z-[3] md:left-auto md:top-auto md:bottom-[20svh] md:right-6 lg:right-14"
+        className="absolute left-4 top-[30svh] z-[3] md:left-auto md:top-auto md:bottom-[20svh] md:right-6 lg:right-14"
       >
         <motion.ul
-          className="flex w-40 flex-col gap-2.5 rounded-xl bg-[#2a2822]/80 p-4 text-white backdrop-blur-md"
+          className="flex w-40 flex-col gap-2.5 rounded-xl bg-[#2a2822]/40 p-4 text-white backdrop-blur-sm md:bg-[#2a2822]/80 md:backdrop-blur-md"
           {...blurIn(2.25)}
         >
           {traits.map((trait, i) => (
@@ -265,7 +265,7 @@ export const HeroSection = () => {
         className="absolute right-4 top-[46svh] z-[3] md:hidden"
       >
         <motion.div
-          className="w-36 rounded-xl bg-[#2a2822]/80 p-4 text-center text-white backdrop-blur-md"
+          className="w-36 rounded-xl bg-[#2a2822]/40 p-4 text-center text-white backdrop-blur-sm"
           {...blurIn(2.2)}
         >
           <div className="text-4xl font-black text-[#F2E900]">2×</div>
@@ -279,7 +279,7 @@ export const HeroSection = () => {
         className="absolute bottom-[8svh] left-4 z-[3] md:hidden"
       >
         <motion.div
-          className="w-40 rounded-xl bg-[#2a2822]/80 p-4 text-white backdrop-blur-md"
+          className="w-40 rounded-xl bg-[#2a2822]/40 p-4 text-white backdrop-blur-sm"
           {...blurIn(2.5)}
         >
           <div className="text-3xl font-black text-[#F2E900]">20+</div>
