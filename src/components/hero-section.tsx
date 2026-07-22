@@ -174,12 +174,22 @@ export const HeroSection = () => {
         <motion.img
           src="/nathnael-cutout.png"
           alt="Portrait of Nathnael Semere Assefa"
-          className="h-full w-auto max-w-none object-contain object-bottom"
+          className="h-full w-auto max-w-none object-contain object-bottom [mask-image:linear-gradient(to_bottom,#000_58%,rgba(0,0,0,0.55)_78%,transparent_97%)]"
           initial={{ opacity: 0, y: 140, filter: "blur(18px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ delay: 0.85, duration: 1.1, ease: EASE_OUT }}
         />
       </motion.div>
+
+      {/* Progressive blur at the base of the portrait, dissolving it into the
+          canvas before the next section. Stacked backdrop layers, each masked
+          to start lower, ramp the blur smoothly instead of banding. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[34svh]">
+        <div className="absolute inset-0 backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_35%)]" />
+        <div className="absolute inset-0 backdrop-blur-[6px] [mask-image:linear-gradient(to_bottom,transparent_25%,#000_60%)]" />
+        <div className="absolute inset-0 backdrop-blur-[14px] [mask-image:linear-gradient(to_bottom,transparent_50%,#000_85%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#D8D4C6]/45 to-[#D8D4C6]" />
+      </div>
 
       {/* Tagline over the portrait */}
       <motion.div
@@ -289,8 +299,13 @@ export const HeroSection = () => {
         </motion.div>
       </motion.div>
 
-      {/* Bottom blurbs */}
-      <motion.div style={{ opacity: sidesOpacity }}>
+      {/* Bottom blurbs. The wrapper must be positioned with its own z-index:
+          animating opacity gives it a stacking context, which would otherwise
+          trap the captions' z-index below the blur overlay. */}
+      <motion.div
+        style={{ opacity: sidesOpacity }}
+        className="pointer-events-none absolute inset-0 z-[5]"
+      >
         <motion.p
           className="absolute bottom-4 left-4 right-4 z-[3] rounded-lg bg-[#D8D4C6]/90 px-3 py-2 text-[13px] font-medium leading-relaxed backdrop-blur-md lg:bottom-8 lg:left-14 lg:right-auto lg:max-w-[220px] lg:bg-transparent lg:p-0 lg:text-xs lg:opacity-70 lg:backdrop-blur-none"
           {...blurIn(3)}
