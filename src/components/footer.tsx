@@ -15,113 +15,98 @@ export const Footer = () => {
 
   const handleExternalLink = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    
-    // Check if we're in an iframe
     const isInIframe = window.self !== window.top;
-    
     if (isInIframe) {
-      // Post message to parent to open in new tab
       window.parent.postMessage(
         { type: "OPEN_EXTERNAL_URL", data: { url: href } },
         "*"
       );
     } else {
-      // Not in iframe, open normally
       window.open(href, "_blank", "noopener,noreferrer");
     }
   };
 
   return (
-    <footer className="border-t border-border bg-card">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-[#17150f] text-white lg:pl-72">
+      <div className="mx-auto max-w-4xl px-6 py-14 md:px-10">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">NS</span>
-              </div>
-              <span className="font-semibold text-lg">Nathnael Semere</span>
+            <div className="flex items-center gap-2.5">
+              <span className="rounded-md bg-[#F2E900] px-2.5 py-1 text-sm font-black tracking-tight text-[#17150f]">
+                NATHNAEL<span className="align-super text-[8px]">®</span>
+              </span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Software Engineer & Business Strategist based in Ethiopia, building
-              meaningful solutions that make an impact.
+            <p className="text-sm leading-relaxed text-white/60">
+              Software Engineer &amp; Business Strategist based in Ethiopia,
+              building meaningful solutions that make an impact.
             </p>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Quick Links</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-white/50">
+              Quick Links
+            </h3>
             <nav className="flex flex-col space-y-2">
-              <a
-                href="#home"
-                onClick={(e) => scrollToSection(e, "#home")}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Home
-              </a>
-              <a
-                href="#about"
-                onClick={(e) => scrollToSection(e, "#about")}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                About
-              </a>
-              <a
-                href="#projects"
-                onClick={(e) => scrollToSection(e, "#projects")}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Projects
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => scrollToSection(e, "#contact")}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Contact
-              </a>
+              {[
+                { label: "Home", href: "#home" },
+                { label: "About", href: "#about" },
+                { label: "Projects", href: "#projects" },
+                { label: "Services", href: "#services" },
+                { label: "Contact", href: "#contact" },
+              ].map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => scrollToSection(e, link.href)}
+                  className="text-sm text-white/60 transition-colors hover:text-[#F2E900]"
+                >
+                  {link.label}
+                </a>
+              ))}
             </nav>
           </div>
 
           {/* Connect */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Connect</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-white/50">
+              Connect
+            </h3>
             <div className="flex gap-3">
-              <a
-                href="https://github.com/nathuse"
-                onClick={(e) => handleExternalLink("https://github.com/nathuse", e)}
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/nathnael-semere-003721335"
-                onClick={(e) => handleExternalLink("https://www.linkedin.com/in/nathnael-semere-003721335", e)}
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="https://t.me/Natuh21"
-                onClick={(e) => handleExternalLink("https://t.me/Natuh21", e)}
-                className="p-3 bg-secondary hover:bg-secondary/80 rounded-lg transition-all hover:scale-110 cursor-pointer"
-                aria-label="Telegram"
-              >
-                <Send className="w-5 h-5" />
-              </a>
+              {[
+                { icon: Github, label: "GitHub", href: "https://github.com/nathuse" },
+                {
+                  icon: Linkedin,
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/in/nathnael-semere-003721335",
+                },
+                { icon: Send, label: "Telegram", href: "https://t.me/Natuh21" },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  onClick={(e) => handleExternalLink(social.href, e)}
+                  className="rounded-lg bg-white/10 p-3 transition-all hover:scale-110 hover:bg-[#F2E900] hover:text-[#17150f]"
+                  aria-label={social.label}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/60">
               <a
                 href="mailto:nathisemere5@gmail.com"
-                className="hover:text-foreground transition-colors"
+                className="transition-colors hover:text-[#F2E900]"
               >
                 nathisemere5@gmail.com
               </a>
             </p>
           </div>
+        </div>
+
+        <div className="mt-12 border-t border-white/10 pt-6 text-xs text-white/40">
+          © {currentYear} Nathnael Semere Assefa. Code, Applied Differently.
         </div>
       </div>
     </footer>

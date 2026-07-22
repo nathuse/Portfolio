@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, Send, Github, Linkedin, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, Send, Github, Linkedin, MessageCircle } from "lucide-react";
 
 const contactInfo = [
   {
@@ -46,35 +46,65 @@ const socialLinks = [
     icon: Github,
     label: "GitHub",
     href: "https://github.com/nathuse",
-    color: "hover:bg-gray-600 hover:text-white",
   },
   {
     icon: Linkedin,
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/nathnael-semere-003721335",
-    color: "hover:bg-blue-600 hover:text-white",
   },
   {
     icon: Send,
     label: "Telegram",
     href: "https://t.me/Natuh21",
-    color: "hover:bg-blue-500 hover:text-white",
   },
 ];
 
+const reasons = [
+  {
+    number: "1",
+    title: "Technical Excellence",
+    description:
+      "Strong foundation in software engineering with hands-on experience in modern web technologies and best practices.",
+  },
+  {
+    number: "2",
+    title: "Business Mindset",
+    description:
+      "Unique blend of technical and business knowledge ensures solutions align with your goals and deliver real value.",
+  },
+  {
+    number: "3",
+    title: "User-Focused Approach",
+    description:
+      "Every solution is built with the end user in mind, ensuring practical and impactful results.",
+  },
+  {
+    number: "4",
+    title: "Continuous Learning",
+    description:
+      "Always exploring new technologies and methodologies to deliver the best possible solutions.",
+  },
+];
+
+const reveal = (delay = 0) => ({
+  initial: { opacity: 0, y: 40, filter: "blur(10px)" },
+  whileInView: { opacity: 1, y: 0, filter: "blur(0px)" },
+  viewport: { once: true, amount: 0.2 },
+  transition: { delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+});
+
 export const ContactSection = () => {
-  const handleLinkClick = (href: string, isExternal: boolean, e: React.MouseEvent<HTMLAnchorElement>) => {
-    // For mailto and tel links, let default behavior handle them
+  const handleLinkClick = (
+    href: string,
+    isExternal: boolean,
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     if (href.startsWith("mailto:") || href.startsWith("tel:")) {
       return;
     }
-
-    // For external links (http/https), handle iframe context
     if (isExternal && href.startsWith("http")) {
       e.preventDefault();
-      
       const isInIframe = window.self !== window.top;
-      
       if (isInIframe) {
         window.parent.postMessage(
           { type: "OPEN_EXTERNAL_URL", data: { url: href } },
@@ -86,265 +116,123 @@ export const ContactSection = () => {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    },
-  };
-
-  const reasonVariants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.1,
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
-    }),
-  };
-
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 lg:pl-72 bg-[#D8D4C6] text-[#17150f]">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, type: "spring" }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <motion.h2
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Get In Touch
-          </motion.h2>
-          <motion.p
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Let's collaborate on your next project or discuss opportunities
-          </motion.p>
+    <section
+      id="contact"
+      className="bg-[#D8D4C6] px-6 py-24 text-[#17150f] md:px-10 lg:pl-72 lg:pr-16"
+    >
+      <div className="mx-auto max-w-4xl">
+        <motion.div {...reveal()}>
+          <span className="inline-block rounded-full border border-[#17150f] px-3 py-1 text-[10px] font-bold uppercase tracking-widest">
+            Contact
+          </span>
+          <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Get In
+            <br />
+            <span className="opacity-60">Touch</span>
+          </h2>
+          <p className="mt-4 max-w-md text-sm leading-relaxed opacity-70">
+            Let&apos;s collaborate on your next project or discuss
+            opportunities.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-6"
-          >
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          <div className="flex flex-col gap-5">
             <motion.div
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+              {...reveal(0.1)}
+              className="rounded-2xl bg-[#17150f] p-7 text-white"
             >
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <div className="space-y-4">
-                {contactInfo.map((item, index) => {
+              <h3 className="text-xl font-bold">Contact Information</h3>
+              <div className="mt-5 space-y-3">
+                {contactInfo.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <motion.a
+                    <a
                       key={item.label}
                       href={item.href}
                       onClick={(e) => handleLinkClick(item.href, item.isExternal, e)}
                       target={item.isExternal ? "_blank" : undefined}
                       rel={item.isExternal ? "noopener noreferrer" : undefined}
-                      className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50 hover:bg-secondary transition-all group cursor-pointer"
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{
-                        scale: 1.02,
-                        x: 5,
-                        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
-                      }}
-                      whileTap={{ scale: 0.98 }}
+                      className="group flex items-start gap-4 rounded-xl bg-white/5 p-3.5 transition-colors hover:bg-white/10"
                     >
-                      <motion.div
-                        className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors"
-                        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Icon className="w-5 h-5 text-primary" />
-                      </motion.div>
-                      <div className="pointer-events-none">
-                        <p className="text-sm text-muted-foreground mb-1">
+                      <span className="rounded-lg bg-[#F2E900] p-2">
+                        <Icon className="h-4 w-4 text-[#17150f]" />
+                      </span>
+                      <span className="pointer-events-none">
+                        <span className="block text-xs text-white/50">
                           {item.label}
-                        </p>
-                        <p className="font-medium group-hover:text-primary transition-colors">
+                        </span>
+                        <span className="mt-0.5 block text-sm font-medium transition-colors group-hover:text-[#F2E900]">
                           {item.value}
-                        </p>
-                      </div>
-                    </motion.a>
+                        </span>
+                      </span>
+                    </a>
                   );
                 })}
               </div>
             </motion.div>
 
             <motion.div
-              variants={itemVariants}
-              whileHover={{ y: -5 }}
-              className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+              {...reveal(0.2)}
+              className="rounded-2xl bg-[#17150f] p-7 text-white"
             >
-              <h3 className="text-2xl font-bold mb-6">Connect With Me</h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => {
+              <h3 className="text-xl font-bold">Connect With Me</h3>
+              <div className="mt-5 flex gap-3">
+                {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
                     <motion.a
                       key={social.label}
                       href={social.href}
-                      onClick={(e) => handleLinkClick(social.href, social.href.startsWith("http"), e)}
+                      onClick={(e) =>
+                        handleLinkClick(social.href, true, e)
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`flex items-center justify-center w-14 h-14 rounded-xl bg-secondary transition-all cursor-pointer ${social.color}`}
+                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 transition-colors hover:bg-[#F2E900] hover:text-[#17150f]"
                       aria-label={social.label}
-                      initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                      whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        delay: index * 0.1,
-                        type: "spring",
-                        stiffness: 200,
-                      }}
-                      whileHover={{
-                        scale: 1.15,
-                        rotate: 360,
-                        transition: { duration: 0.4 },
-                      }}
-                      whileTap={{ scale: 0.9 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.92 }}
                     >
-                      <Icon className="w-6 h-6 pointer-events-none" />
+                      <Icon className="pointer-events-none h-5 w-5" />
                     </motion.a>
                   );
                 })}
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, type: "spring" }}
-            viewport={{ once: true }}
-            whileHover={{ y: -5 }}
-            className="bg-card rounded-2xl p-8 shadow-lg border border-border"
+            {...reveal(0.15)}
+            className="rounded-2xl bg-[#17150f] p-7 text-white"
           >
-            <h3 className="text-2xl font-bold mb-6">Why Work With Me?</h3>
-            <div className="space-y-6">
-              {[
-                {
-                  number: "1",
-                  title: "Technical Excellence",
-                  description:
-                    "Strong foundation in software engineering with hands-on experience in modern web technologies and best practices.",
-                },
-                {
-                  number: "2",
-                  title: "Business Mindset",
-                  description:
-                    "Unique blend of technical and business knowledge ensures solutions align with your goals and deliver real value.",
-                },
-                {
-                  number: "3",
-                  title: "User-Focused Approach",
-                  description:
-                    "Every solution is built with the end user in mind, ensuring practical and impactful results.",
-                },
-                {
-                  number: "4",
-                  title: "Continuous Learning",
-                  description:
-                    "Always exploring new technologies and methodologies to deliver the best possible solutions.",
-                },
-              ].map((reason, index) => (
-                <motion.div
-                  key={reason.number}
-                  className="flex items-start gap-4"
-                  custom={index}
-                  variants={reasonVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  whileHover={{ x: 5 }}
-                >
-                  <motion.div
-                    className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1"
-                    whileHover={{
-                      scale: 1.2,
-                      backgroundColor: "var(--primary)",
-                      transition: { duration: 0.2 },
-                    }}
-                  >
-                    <motion.span
-                      className="text-primary font-bold"
-                      whileHover={{ color: "var(--primary-foreground)" }}
-                    >
-                      {reason.number}
-                    </motion.span>
-                  </motion.div>
+            <h3 className="text-xl font-bold">Why Work With Me?</h3>
+            <div className="mt-6 space-y-5">
+              {reasons.map((reason) => (
+                <div key={reason.number} className="flex items-start gap-4">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F2E900] font-bold text-[#17150f]">
+                    {reason.number}
+                  </span>
                   <div>
-                    <h4 className="font-semibold mb-2">{reason.title}</h4>
-                    <p className="text-muted-foreground text-sm">
+                    <h4 className="font-semibold">{reason.title}</h4>
+                    <p className="mt-1 text-sm leading-relaxed text-white/60">
                       {reason.description}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            <motion.div
-              className="mt-8 p-6 bg-primary/10 rounded-xl"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              whileHover={{
-                scale: 1.02,
-                backgroundColor: "var(--primary)",
-                transition: { duration: 0.3 },
-              }}
-            >
-              <motion.p
-                className="text-center text-sm text-muted-foreground"
-                whileHover={{ color: "var(--primary-foreground)" }}
-              >
-                <span className="font-semibold text-foreground block mb-2">
+            <div className="mt-8 rounded-xl bg-[#F2E900] p-6 text-[#17150f]">
+              <p className="text-center text-sm">
+                <span className="mb-1.5 block font-bold">
                   Ready to start a project?
                 </span>
-                Reach out via email or any of the contact methods above. I'm
-                always open to discussing new opportunities!
-              </motion.p>
-            </motion.div>
+                Reach out via email or any of the contact methods above.
+                I&apos;m always open to discussing new opportunities!
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

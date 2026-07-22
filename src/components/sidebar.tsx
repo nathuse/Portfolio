@@ -35,6 +35,9 @@ export const Sidebar = () => {
   });
 
   useEffect(() => {
+    // Sync visibility on mount — scroll events alone miss the case where the
+    // page loads (or hot-reloads) already scrolled past the hero.
+    setVisible(window.scrollY > window.innerHeight * 0.65);
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
